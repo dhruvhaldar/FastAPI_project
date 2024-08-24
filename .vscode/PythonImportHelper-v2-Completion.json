@@ -1,0 +1,184 @@
+[
+    {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Form",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "Response",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "HTMLResponse",
+        "importPath": "fastapi.responses",
+        "description": "fastapi.responses",
+        "isExtraImport": true,
+        "detail": "fastapi.responses",
+        "documentation": {}
+    },
+    {
+        "label": "FileResponse",
+        "importPath": "fastapi.responses",
+        "description": "fastapi.responses",
+        "isExtraImport": true,
+        "detail": "fastapi.responses",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "Union",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "sqlite3",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "sqlite3",
+        "description": "sqlite3",
+        "detail": "sqlite3",
+        "documentation": {}
+    },
+    {
+        "label": "ScriptRequest",
+        "kind": 6,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "class ScriptRequest(BaseModel):\n    script_type: str\n    content: str\n@app.get(\"/\", response_class=HTMLResponse)\ndef read_root():\n    html_content = \"\"\"\n    <html lang=\"en\">\n        <head>\n            <meta charset=\"UTF-8\">\n            <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "read_root",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def read_root():\n    html_content = \"\"\"\n    <html lang=\"en\">\n        <head>\n            <meta charset=\"UTF-8\">\n            <meta name=\"viewport\" content=\"width=device-width, initial-scale=1.0\">\n            <title>Script Generator</title>\n            <!-- Tailwind CSS -->\n            <link href=\"https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css\" rel=\"stylesheet\">\n        </head>",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "generate_script",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def generate_script(script_type: str = Form(...), script_content: str = Form(...)):\n    if script_type == \"python\":\n        filename = \"generated_script.py\"\n        script = f\"# Python Script\\n{script_content}\"\n    elif script_type == \"bash\":\n        filename = \"generated_script.sh\"\n        script = f\"# Bash Script\\n{script_content}\"\n    else:\n        return \"Unknown script type selected.\"\n    # Save the script to a file",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "download_script",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def download_script(filename: str):\n    file_path = os.path.join(os.getcwd(), filename)\n    return FileResponse(path=file_path, filename=filename, media_type='application/octet-stream')\nif __name__ == '__main__':\n    import uvicorn\n    uvicorn.run(app, host=\"127.0.0.1\", port=5353)",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "app = FastAPI()\nclass ScriptRequest(BaseModel):\n    script_type: str\n    content: str\n@app.get(\"/\", response_class=HTMLResponse)\ndef read_root():\n    html_content = \"\"\"\n    <html lang=\"en\">\n        <head>\n            <meta charset=\"UTF-8\">",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "connect_db",
+        "kind": 2,
+        "importPath": "query_database",
+        "description": "query_database",
+        "peekOfCode": "def connect_db():\n    return sqlite3.connect('templates.db')\ndef fetch_all_records():\n    conn = connect_db()\n    cursor = conn.cursor()\n    cursor.execute(\"SELECT * FROM templates\")\n    rows = cursor.fetchall()\n    conn.close()\n    return rows\ndef update_record(template_id, new_script_type, new_content):",
+        "detail": "query_database",
+        "documentation": {}
+    },
+    {
+        "label": "fetch_all_records",
+        "kind": 2,
+        "importPath": "query_database",
+        "description": "query_database",
+        "peekOfCode": "def fetch_all_records():\n    conn = connect_db()\n    cursor = conn.cursor()\n    cursor.execute(\"SELECT * FROM templates\")\n    rows = cursor.fetchall()\n    conn.close()\n    return rows\ndef update_record(template_id, new_script_type, new_content):\n    conn = connect_db()\n    cursor = conn.cursor()",
+        "detail": "query_database",
+        "documentation": {}
+    },
+    {
+        "label": "update_record",
+        "kind": 2,
+        "importPath": "query_database",
+        "description": "query_database",
+        "peekOfCode": "def update_record(template_id, new_script_type, new_content):\n    conn = connect_db()\n    cursor = conn.cursor()\n    cursor.execute(\"\"\"\n        UPDATE templates\n        SET script_type = ?, content = ?\n        WHERE id = ?\n    \"\"\", (new_script_type, new_content, template_id))\n    conn.commit()\n    conn.close()",
+        "detail": "query_database",
+        "documentation": {}
+    },
+    {
+        "label": "delete_record",
+        "kind": 2,
+        "importPath": "query_database",
+        "description": "query_database",
+        "peekOfCode": "def delete_record(template_id):\n    conn = connect_db()\n    cursor = conn.cursor()\n    cursor.execute(\"DELETE FROM templates WHERE id = ?\", (template_id,))\n    conn.commit()\n    conn.close()\ndef add_record(script_type, content):\n    conn = connect_db()\n    cursor = conn.cursor()\n    cursor.execute(\"\"\"",
+        "detail": "query_database",
+        "documentation": {}
+    },
+    {
+        "label": "add_record",
+        "kind": 2,
+        "importPath": "query_database",
+        "description": "query_database",
+        "peekOfCode": "def add_record(script_type, content):\n    conn = connect_db()\n    cursor = conn.cursor()\n    cursor.execute(\"\"\"\n        INSERT INTO templates (script_type, content)\n        VALUES (?, ?)\n    \"\"\", (script_type, content))\n    conn.commit()\n    conn.close()\ndef print_all_records():",
+        "detail": "query_database",
+        "documentation": {}
+    },
+    {
+        "label": "print_all_records",
+        "kind": 2,
+        "importPath": "query_database",
+        "description": "query_database",
+        "peekOfCode": "def print_all_records():\n    print(\"Current records in the database:\")\n    records = fetch_all_records()\n    for record in records:\n        print(record)\ndef interactive_menu():\n    while True:\n        print(\"\\nDatabase Management Menu\")\n        print(\"1. View all records\")\n        print(\"2. Add a new record\")",
+        "detail": "query_database",
+        "documentation": {}
+    },
+    {
+        "label": "interactive_menu",
+        "kind": 2,
+        "importPath": "query_database",
+        "description": "query_database",
+        "peekOfCode": "def interactive_menu():\n    while True:\n        print(\"\\nDatabase Management Menu\")\n        print(\"1. View all records\")\n        print(\"2. Add a new record\")\n        print(\"3. Update a record\")\n        print(\"4. Delete a record\")\n        print(\"5. Exit\")\n        choice = input(\"Enter your choice (1-5): \").strip()\n        if choice == '1':",
+        "detail": "query_database",
+        "documentation": {}
+    }
+]
